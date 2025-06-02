@@ -1,0 +1,16 @@
+[{
+    "title": "Add Product",
+    "detail": "Add a new product to the store",
+    "page": "productAdd"
+},
+{
+    "title": "Edit Product",
+    "detail": "Edit,Update,Increase or Decrease product stock,and Delete product",
+    "page": "productEdit"
+},
+{
+    "title": "Orders",
+    "detail": "View and manage customer orders",
+    "page": "orders"
+}
+]

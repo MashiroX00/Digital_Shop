@@ -1,0 +1,25 @@
+[{
+    "title": "Products",
+    "detail": "Manage products in the store",
+    "page": "products"
+},
+{
+    "title": "Orders",
+    "detail": "View and manage customer orders",
+    "page": "orders"
+},
+{
+    "title": "Customers",
+    "detail": "Manage customer accounts and details",
+    "page": "customers"
+},
+{
+    "title": "Settings",
+    "detail": "Configure store settings and preferences",
+    "page": "settings"
+},
+{
+    "title": "Reports",
+    "detail": "View sales and performance reports",
+    "page": "reports"
+}]
