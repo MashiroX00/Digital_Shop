@@ -1,13 +1,13 @@
 'use client'
 import { useState, useEffect, useContext } from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBars, faX, faHouse, faCircleExclamation, faCircleQuestion, faCartShopping } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faX, faHouse, faCircleExclamation, faCircleQuestion, faCartShopping,faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 import NotificationPoint from "./notic";
-import { CartContext } from "../layout";
 import Link from "next/link";
+import { LoginContext } from "../layout";
 export default function SideBarOverlay() {
-    const { cart, setCart } = useContext(CartContext);
     const [isOpenMenu, setOpenMenu] = useState(false);
+    const {isLogin, setIsLogin} = useContext(LoginContext);
     function openMenu() {
         setOpenMenu(true);
         console.log("menu is open!");
@@ -15,6 +15,13 @@ export default function SideBarOverlay() {
     function closeMenu() {
         setOpenMenu(false);
         console.log("menu is close!");
+    }
+    const logInContent = () => {
+        return(
+            <>
+            <Link href="/auth/logout"><li className="px-5 hover:bg-[var(--yale-blue)]/80 py-3 rounded-2xl"><span className="mr-2"><FontAwesomeIcon icon={faRightFromBracket} size="lg" /></span> Logout</li></Link>
+            </>
+        )
     }
     return (
             <>
@@ -36,10 +43,7 @@ export default function SideBarOverlay() {
                                 <Link href="/"><li className="px-4 hover:bg-[var(--yale-blue)]/80 py-3 rounded-2xl"><span className="mr-2"><FontAwesomeIcon icon={faHouse} size="lg" /></span> Home</li></Link>
                                 <Link href="/about"><li className="px-4 hover:bg-[var(--yale-blue)]/80 py-3 rounded-2xl"><span className="mr-2"><FontAwesomeIcon icon={faCircleExclamation} size="lg" /></span> About</li></Link>
                                 <Link href="/fqa"><li className="px-4 hover:bg-[var(--yale-blue)]/80 py-3 rounded-2xl"><span className="mr-2"><FontAwesomeIcon icon={faCircleQuestion} size="lg" /></span> FQA</li></Link>
-                                <Link href="/cart/1"><li className="px-4 hover:bg-[var(--yale-blue)]/80 py-3 rounded-2xl">
-                                    <span className="mr-2"><FontAwesomeIcon icon={faCartShopping} size="lg" />
-                                    </span> Cart <span className="ml-1"><NotificationPoint point={cart} /></span>
-                                </li></Link>
+                                {isLogin ? logInContent() : null}
                             </ul>
                         </div>
                     </div>

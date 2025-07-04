@@ -60,9 +60,7 @@ export default function ProductAdd() {
   })};
   return (
     <div
-      className="flex flex-col my-5 mx-5 md:my-15 md:mx-15 bg-[var(--oxford-blue)]/30 rounded-xl p-5 shadow-md shadow-white"
-      data-aos="fade-up"
-      data-aos-duration="1000"
+      className="flex flex-col my-5 mx-5 md:my-15 md:mx-15 bg-[var(--oxford-blue)]/30 rounded-xl p-5 shadow-md shadow-white" data-aos="fade-up"
     >
       {isResponse ? <SuccessPopup /> : null}
       <h1 className="text-2xl font-bold underline underline-offset-2">

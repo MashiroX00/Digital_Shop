@@ -9,7 +9,7 @@ export default function MenuCard(props) {
     const currentPage = pathname + "/" || "/";
     const page = currentPage + props.page || "admin";
     return (
-        <div className="w-full h-50 flex flex-col rounded-xl bg-[var(--oxford-blue)]/30 shadow-white relative " data-aos="fade-up" data-aos-duration="1000" >
+        <div className="w-full h-50 flex flex-col rounded-xl bg-[var(--oxford-blue)]/30 shadow-white relative" data-aos="fade-up">
            <h1 className="text-2sm font-bold mt-3 ml-5">{props.title}</h1>
            <p className="text-sm mt-3 ml-6">{props.detail}</p>
            <Link href={page} className=" absolute bottom-5 right-5 hover:scale-110 transform ease-in-out duration-200 delay-75 hover:underline underline-offset-2 bg-[var(--yale-blue)] p-2 rounded-xl">Go to page <FontAwesomeIcon icon={faArrowRight}/></Link>
