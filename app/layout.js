@@ -28,16 +28,19 @@ export default function RootLayout({ children }) {
   const path = usePathname();
   const [token,setToken] = useState("");
   const [isLogin,setIsLogin] = useState(false);
+  const [isAuth,setIsAuth] = useState(false);
   const [user,setUser] = useState([]);
 
-  const refeshdata = () =>{
+   const refeshdata = async ()  =>  {
     const gettoken = localStorage.getItem("token");
     if(!gettoken) {
       setIsLogin(false);
+      setIsAuth(true);
       return false
     }
-    getUserInfo();
+    await getUserInfo();
     setIsLogin(true);
+    setIsAuth(true);
     return true
   }
   useEffect(() => {
@@ -49,11 +52,12 @@ export default function RootLayout({ children }) {
   },[])
   return (
     <html lang="en">
+       <LoginContext.Provider value={{isLogin,setIsLogin,isAuth}}>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <div className="grid grid-cols-5 grid-rows-[0.2fr_1fr_1fr] h-screen relative">
-          <LoginContext.Provider value={{isLogin,setIsLogin}}>
+         
           <div className="col-span-5 row-span-1 ">
               <Usernav />
            </div>
@@ -61,12 +65,12 @@ export default function RootLayout({ children }) {
            <div className="hidden md:col-span-1 md:row-start-2 md:row-end-4 md:grid ">
              <Sidebar />
            </div> 
-           </LoginContext.Provider>
            <div className="col-span-5 row-span-2 md:col-span-4 ">
             {children}
            </div>
         </div>
       </body>
+      </LoginContext.Provider>
     </html>
   );
 }

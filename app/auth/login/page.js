@@ -45,9 +45,8 @@ export default function LoginPage() {
                 Swal.fire({
                     icon: "error",
                     title: "Login failed",
-                    text: error.message
+                    text: error.response.data.message
                 })
-            console.log(error)
         }
     }
     return (
