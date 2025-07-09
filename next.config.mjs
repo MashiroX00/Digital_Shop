@@ -6,7 +6,7 @@ const nextConfig = {
       {
         protocol: 'https',
         hostname: 'digital-shop-api.onrender.com',
-        pathname: '/uploads/**',
+        pathname: '/uploads/',
       },
     ],
   },
