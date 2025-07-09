@@ -44,7 +44,8 @@ export default function RegisterPage() {
   e.preventDefault();
   setIsLoading(true);
   try {
-    const response = await axios.post('http://localhost:5000/api/users', {
+    const url = process.env.NEXT_PUBLIC_API_URL + "users"
+    const response = await axios.post(url, {
       username: data.username,
       password: data.password,
       email: data.email
