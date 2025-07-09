@@ -1,7 +1,6 @@
 'use client'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCartPlus, faList, faDollarSign } from "@fortawesome/free-solid-svg-icons";
-import { useContext } from "react";
+import { faList, faDollarSign } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 import Image from "next/image";
 export default function CardItem(props) {
