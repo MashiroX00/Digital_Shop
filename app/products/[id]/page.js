@@ -35,7 +35,8 @@ export default function ProductDetailPage() {
           stock: 1,
           sell: response.data.selled,
           imgUrl: response.data.imgUrl
-            ? process.env.NEXT_PUBLIC_API_PICTURE_URL + response.data.imgUrl
+            ? process.env.NEXT_PUBLIC_API_PICTURE_URL +
+              response.data.imgUrl.replace(/\\/g, "/")
             : "/exampleItem.png",
         });
         setIsLoading(false);
