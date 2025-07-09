@@ -9,7 +9,8 @@ import React,{ useEffect, useState } from "react";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import axios from "axios";
-import { Analytics } from "@vercel/analytics/next"
+import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { usePathname } from "next/navigation";
 import { getUserInfo } from "./api/user/getUserInfo";
 config.autoAddCss = false;
@@ -54,6 +55,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <Analytics/>
+      <SpeedInsights/>
        <LoginContext.Provider value={{isLogin,setIsLogin,isAuth}}>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
