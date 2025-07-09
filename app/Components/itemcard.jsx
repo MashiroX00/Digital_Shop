@@ -1,12 +1,15 @@
 'use client'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCartPlus, faList,faDollarSign } from "@fortawesome/free-solid-svg-icons";
+import { faCartPlus, faList, faDollarSign } from "@fortawesome/free-solid-svg-icons";
 import { useContext } from "react";
 import Link from "next/link";
 import Image from "next/image";
 export default function CardItem(props) {
     const id = props.item.id;
-    const ImgUrl = process.env.NEXT_PUBLIC_API_PICTURE_URL + props.item.imgUrl || "exampleItem.png";
+    const ImgUrl = props.item.imgUrl
+        ? process.env.NEXT_PUBLIC_API_PICTURE_URL + props.item.imgUrl
+        : "/exampleItem.png"; // หรือภาพ local
+
     const name = props.item.name || "example";
     const price = props.item.price || 0.00;
     const sell = props.item.sell || 0;

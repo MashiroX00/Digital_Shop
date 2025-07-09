@@ -10,7 +10,7 @@ import {
   faBoxesStacked,
   faBahtSign,
   faMoneyBill,
-  faArrowLeft
+  faArrowLeft,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 export default function ProductDetailPage() {
@@ -18,7 +18,7 @@ export default function ProductDetailPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [product, setProduct] = useState(null);
   const params = useParams();
-  const checkoutUrl = '/products/checkout/' + params.id;
+  const checkoutUrl = "/products/checkout/" + params.id;
   useEffect(() => {
     // initialize function to fetch data
     async function fetching() {
@@ -34,9 +34,9 @@ export default function ProductDetailPage() {
           price: response.data.price,
           stock: 1,
           sell: response.data.selled,
-          imgUrl:
-            process.env.NEXT_PUBLIC_API_PICTURE_URL + response.data.imgUrl ||
-            "exampleItem.png",
+          imgUrl: response.data.imgUrl
+            ? process.env.NEXT_PUBLIC_API_PICTURE_URL + response.data.imgUrl
+            : "/exampleItem.png",
         });
         setIsLoading(false);
       }
@@ -52,7 +52,12 @@ export default function ProductDetailPage() {
   }, [params.id]);
   return (
     <div className="flex flex-col mx-5 my-5 md:mx-10 md:my-10 lg:mx-20 lg:my-20">
-      <Link href="/" className="text-lg md:text-xl font-bold w-fit hover:underline underline-offset-4 transition-all duration-200"><FontAwesomeIcon icon={faArrowLeft}/> Back</Link>
+      <Link
+        href="/"
+        className="text-lg md:text-xl font-bold w-fit hover:underline underline-offset-4 transition-all duration-200"
+      >
+        <FontAwesomeIcon icon={faArrowLeft} /> Back
+      </Link>
       <h1 className="text-lg md:text-xl font-bold">Product Detail</h1>
       <div className="mt-5 bg-amber-50/20 w-full px-5 py-5 rounded-lg">
         {isLoading ? (

@@ -12,7 +12,7 @@ import {
   faArrowLeft,
   faTag,
   faBahtSign,
-  faMoneyBill
+  faMoneyBill,
 } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
 import { proceedDiscout } from "@/app/api/products/coupon";
@@ -56,41 +56,41 @@ export default function CheckoutPage() {
   }
 
   function onCheckout() {
-  async function proceedOrder() {
-    Swal.fire({
-      icon: "success",
-      title: "Your order in queue.",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        return router.push('/');
-      }
-    })
+    async function proceedOrder() {
+      Swal.fire({
+        icon: "success",
+        title: "Your order in queue.",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          return router.push("/");
+        }
+      });
+    }
+    function confirmOrder() {
+      Swal.fire({
+        icon: "info",
+        title: "Are you sure to buy this item?",
+        showCancelButton: true,
+      }).then((result) => {
+        if (result.isConfirmed) {
+          proceedOrder();
+        }
+      });
+    }
+    if (!couponUsed) {
+      Swal.fire({
+        icon: "warning",
+        title: "Use coupon?",
+        showCancelButton: true,
+      }).then((result) => {
+        if (result.isDenied || result.isDismissed) {
+          confirmOrder();
+        }
+      });
+      return; // Prevent confirmOrder from being called immediately
+    }
+    confirmOrder();
   }
-  function confirmOrder() {
-    Swal.fire({
-      icon: "info",
-      title: "Are you sure to buy this item?",
-      showCancelButton: true
-    }).then((result) => {
-      if (result.isConfirmed) {
-        proceedOrder();
-      }
-    })
-  }
-  if(!couponUsed) {
-    Swal.fire({
-      icon: "warning",
-      title: "Use coupon?",
-      showCancelButton: true
-    }).then((result) => {
-      if(result.isDenied || result.isDismissed) {
-        confirmOrder();
-      }
-    });
-    return; // Prevent confirmOrder from being called immediately
-  }
-  confirmOrder();
-}
 
   useEffect(() => {
     if (isAuth) {
@@ -121,9 +121,9 @@ export default function CheckoutPage() {
           price: response.data.price,
           stock: 1,
           sell: response.data.selled,
-          imgUrl:
-            process.env.NEXT_PUBLIC_API_PICTURE_URL + response.data.imgUrl ||
-            "exampleItem.png",
+          imgUrl: response.data.imgUrl
+            ? process.env.NEXT_PUBLIC_API_PICTURE_URL + response.data.imgUrl
+            : "/exampleItem.png",
         });
         setIsLoading(false);
       } catch (error) {
@@ -196,7 +196,16 @@ export default function CheckoutPage() {
                   </div>
                 ) : null}
               </div>
-              <div className="my-2"><button className="bg-green-500/80 rounded-lg w-full px-5 py-3 text-xl lg:text-2xl align-baseline hover:bg-green-500" onClick={() => {onCheckout()}}><FontAwesomeIcon icon={faMoneyBill}/> Checkout</button></div>
+              <div className="my-2">
+                <button
+                  className="bg-green-500/80 rounded-lg w-full px-5 py-3 text-xl lg:text-2xl align-baseline hover:bg-green-500"
+                  onClick={() => {
+                    onCheckout();
+                  }}
+                >
+                  <FontAwesomeIcon icon={faMoneyBill} /> Checkout
+                </button>
+              </div>
             </div>
           </div>
         )}
