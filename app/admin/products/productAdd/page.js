@@ -42,7 +42,8 @@ export default function ProductAdd() {
     formData.append("catagory", data.category);
     formData.append("file", file);
     try {
-      const response = await fetch("http://localhost:5000/api/products/", {
+      const url = process.env.NEXT_PUBLIC_API_URL + "products/";
+      const response = await fetch(url, {
         method: "POST",
         body: formData,
       });
