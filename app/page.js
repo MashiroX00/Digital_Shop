@@ -1,5 +1,6 @@
 'use client'
 import CardItem from "./Components/itemcard";
+import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
@@ -38,7 +39,14 @@ export default function Home() {
   <section className="flex flex-col gap-4 my-5 mx-5 md:my-20 md:mx-20">
     <div className="text-lg md:text-2xl">
       <span className="mr-3"><FontAwesomeIcon icon={faBullhorn} size="lg"/></span><span>Announcement</span>
-      <div className="bg-white h-60 mt-5"></div>
+      <div className="bg-white h-30 md:h-40 lg:h-60 mt-5 object-fill overflow-clip relative ">
+        <Image
+          src="/codehsr.png"
+          alt="Announcement"
+          fill
+          style={{ objectFit: "fill" ,}}
+        />
+      </div>
     </div>
     <div className="text-lg md:text-2xl">
       <span className="mr-3"><FontAwesomeIcon icon={faBox} size="lg"/></span><span>Product</span>

@@ -7,13 +7,15 @@ import Loading from "@/app/Components/loading";
 import { getProduct } from "@/app/api/products/getProduct";
 import Image from "next/image";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { debounce } from "lodash";
+import { debounce, result } from "lodash";
 import {
   faArrowLeft,
   faTag,
   faBahtSign,
+  faMoneyBill
 } from "@fortawesome/free-solid-svg-icons";
 import Link from "next/link";
+import { proceedDiscout } from "@/app/api/products/coupon";
 export default function CheckoutPage() {
   const { isLogin, isAuth } = useContext(LoginContext);
   const params = useParams();
@@ -22,12 +24,28 @@ export default function CheckoutPage() {
   const [product, setProduct] = useState(null);
   const [copon, setCopon] = useState("");
   const router = useRouter();
+  const [couponUsed, setCouponUsed] = useState(false);
+  const [discount, setDiscount] = useState(0);
+  const [total, settotal] = useState(0);
 
   const discountChecking = useMemo(
     () =>
-      debounce((value) => {
-        console.log(value);
-      }, 500),
+      debounce(async (value) => {
+        if (!value) {
+          setDiscount(0);
+          settotal(0);
+          return setCouponUsed(false);
+        }
+        const result = await proceedDiscout(value, id);
+        if (!result) {
+          setDiscount(0);
+          settotal(0);
+          return setCouponUsed(false);
+        }
+        setDiscount(result.data.discount);
+        settotal(result.data.total);
+        setCouponUsed(true);
+      }, 1000),
     []
   );
 
@@ -36,6 +54,43 @@ export default function CheckoutPage() {
     setCopon(value);
     discountChecking(value);
   }
+
+  function onCheckout() {
+  async function proceedOrder() {
+    Swal.fire({
+      icon: "success",
+      title: "Your order in queue.",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        return router.push('/');
+      }
+    })
+  }
+  function confirmOrder() {
+    Swal.fire({
+      icon: "info",
+      title: "Are you sure to buy this item?",
+      showCancelButton: true
+    }).then((result) => {
+      if (result.isConfirmed) {
+        proceedOrder();
+      }
+    })
+  }
+  if(!couponUsed) {
+    Swal.fire({
+      icon: "warning",
+      title: "Use coupon?",
+      showCancelButton: true
+    }).then((result) => {
+      if(result.isDenied || result.isDismissed) {
+        confirmOrder();
+      }
+    });
+    return; // Prevent confirmOrder from being called immediately
+  }
+  confirmOrder();
+}
 
   useEffect(() => {
     if (isAuth) {
@@ -116,14 +171,32 @@ export default function CheckoutPage() {
                 <FontAwesomeIcon icon={faTag} className="mr-2" />
                 <span>Discount:</span>
                 <input
-                  className="mx-1 outline-none bg-amber-50/30 rounded-xl pl-2"
+                  className="mx-1 outline-none bg-amber-50/30 rounded-xl pl-2 py-3 md:py-1"
                   onChange={coponFieldHandler}
                 />
               </div>
-              <p className="text-xl md:text-base lg:text-2xl mt-2 break-words font-bold bg-amber-50/5 rounded-xl p-3 text-end">
+              <div
+                className={`text-xl md:text-base lg:text-2xl mt-2 break-words font-bold bg-amber-50/5 rounded-xl p-3 text-end `}
+              >
                 Total <FontAwesomeIcon icon={faBahtSign} />
-                {product.price} Baht
-              </p>
+                <span
+                  className={`${couponUsed ? "line-through text-red-600" : ""}`}
+                >
+                  {product.price}{" "}
+                </span>
+                {couponUsed ? (
+                  <div>
+                    <p className="text-sm md:text-lg text-red-600/80">
+                      -{discount}
+                    </p>
+                    <p className="text-xl text-green-400">
+                      <FontAwesomeIcon icon={faBahtSign} />
+                      {total} Baht
+                    </p>
+                  </div>
+                ) : null}
+              </div>
+              <div className="my-2"><button className="bg-green-500/80 rounded-lg w-full px-5 py-3 text-xl lg:text-2xl align-baseline hover:bg-green-500" onClick={() => {onCheckout()}}><FontAwesomeIcon icon={faMoneyBill}/> Checkout</button></div>
             </div>
           </div>
         )}
