@@ -90,7 +90,7 @@ export default function ProductDetailPage() {
               {product.stock == 0 ? (
                 <div>
                   <p className="text-sm md:text-base lg:text-2sm mt-2 break-words font-bold bg-yellow-500/20 rounded-xl p-3">
-                    Product isn't available
+                    Product isnt available
                   </p>
                 </div>
               ) : (
