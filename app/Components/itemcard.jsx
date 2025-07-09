@@ -8,12 +8,13 @@ export default function CardItem(props) {
     const id = props.item.id;
     const ImgUrl = props.item.imgUrl
         ? process.env.NEXT_PUBLIC_API_PICTURE_URL + props.item.imgUrl
-        : "/exampleItem.png"; // หรือภาพ local
+        : "/exampleItem.png"; 
 
     const name = props.item.name || "example";
     const price = props.item.price || 0.00;
     const sell = props.item.sell || 0;
     const DetailUrl = "/products/" + id;
+    console.log(ImgUrl);
     return (
         <div className="flex flex-col bg-[var(--yale-blue)] w-fit h-full rounded-xl relative" data-aos="fade-up" data-aos-duration="1000">
             <div className="flex flex-col justify-between h-full">
