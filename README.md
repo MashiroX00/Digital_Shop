@@ -1,4 +1,4 @@
-#Sample Digital Shop with digital product
+# Sample Digital Shop with digital product
 this is a sample digital shop for e-commerace
 
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
